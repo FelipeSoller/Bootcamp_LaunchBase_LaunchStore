@@ -7,6 +7,10 @@ routes.get('/', function(require, response) {
 });
 
 routes.get('/products/create', ProductController.create);
+routes.post('/products', ProductController.post);
+routes.get('/products/:id/edit', ProductController.edit);
+routes.put('/products', ProductController.put);
+routes.delete('/products', ProductController.delete);
 
 routes.get('/ads/create', function(require, response) {
     return response.redirect("/products/create");
