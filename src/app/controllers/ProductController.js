@@ -2,6 +2,7 @@ const { formatPrice } = require('../../lib/utils');
 
 const Category = require('../models/Category');
 const Product = require('../models/Product');
+const File = require('../models/File');
 
 
 module.exports = {
@@ -24,10 +25,16 @@ module.exports = {
             }
         }
 
+        if (require.files.length == 0) 
+            return response.send('Please, send at least one file image')
+
         let results = await Product.create(require.body)
         const productId = results.rows[0].id
 
-        return response.redirect(`/products/${productId}`);
+        const filesPromise = require.files.map(file => File.create({...file, product_id: productId}))
+        await Promise.all(filesPromise)
+
+        return response.redirect(`/products/${productId}/edit`);
      
     },
     async edit(require, response) {
@@ -42,15 +49,36 @@ module.exports = {
         results = await Category.all()
         const categories = results.rows
 
-        return response.render('products/edit.njk', { product, categories });
+        results = await Product.files(product.id)
+        let files = results.rows
+        files = files.map(file => ({
+            ...file,
+            src: `${require.protocol}://${require.headers.host}${file.path.replace('public', '')}`
+        }))
+
+        return response.render('products/edit.njk', { product, categories, files });
     },
     async put(require, response) {
         const keys = Object.keys(require.body)
 
         for (key of keys) {
-            if (require.body[key] == "") {
+            if (require.body[key] == "" && key != "removed_files") {
                 return response.send('Please, fill all the form!')
             }
+        }
+
+        if (require.files.length != 0) {
+            const newFilesPromise = require.files.map(file => File.create({...file, product_id: require.body.id}))
+            await Promise.all(newFilesPromise)
+        }
+
+        if (require.body.removed_files) {
+            const removedFiles = require.body.removed_files.split(",")
+            const lastIndex = removedFiles.length - 1
+            removedFiles.splice(lastIndex, 1)
+
+            const removedFilesPromise = removedFiles.map(id => File.delete(id))
+            await Promise.all(removedFilesPromise)
         }
 
         require.body.price = require.body.price.replace(/\D/g, "")
