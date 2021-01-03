@@ -8,6 +8,7 @@ routes.get('/', function(require, response) {
 });
 
 routes.get('/products/create', ProductController.create);
+routes.get('/products/:id', ProductController.show)
 routes.post('/products', multer.array('photos', 6), ProductController.post);
 routes.get('/products/:id/edit', ProductController.edit);
 routes.put('/products', multer.array('photos', 6), ProductController.put);
