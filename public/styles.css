@@ -422,4 +422,49 @@ form .item #photos-preview img {
     letter-spacing: 0.4px;
 }
 
+/* SHOP */
+.shop h2 {
+    margin: 48px 0;
+}
 
+.shop .items {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 32px;
+}
+
+.shop .items .product-name {
+    height: 50px;
+}
+
+.shop .items h4 {    
+    font-weight: 500;
+    color: #999;
+}
+
+.shop .items p {
+    color: #101010;
+    font-weight: 500;
+    font-size: 24px;
+    margin-top: 14px;
+}
+
+.shop .product {
+    display: grid;
+}
+
+.shop .product .old-price {
+    padding: 0;
+    margin: 4px 0;
+    font-size: 14px;
+    color: #999;
+    text-decoration: line-through;
+}
+
+.shop .product .image {
+    padding-top: 56.25%;
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+    margin-bottom: 14px;
+}
