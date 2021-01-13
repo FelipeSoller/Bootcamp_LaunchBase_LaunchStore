@@ -1,41 +1,93 @@
-const User = require('../models/User')
+const User = require('../models/User');
+const { compare } = require('bcryptjs');
 
-async function post(req, res, next) {
-    const keys = Object.keys(req.body)
+function checkAllFields(body) {
+    const keys = Object.keys(body)
 
         for (key of keys) {
-            if (req.body[key] == "") {
-                return res.render('user/register', {
-                    user: req.body,
+            if (body[key] == "") {
+                return {
+                    user: body,
                     error: 'Por favor, preencha todo o formulário'
-                })
+                }
             }
         }
+}
+async function post(req, res, next) {
+    const fillAllFields = checkAllFields(req.body)
 
-        let { email, cpf_cnpj, password, passwordRepeat } = req.body
+    if(fillAllFields) {
+        return res.render('user/register', fillAllFields)
+    }
 
-        cpf_cnpj = cpf_cnpj.replace(/\D/g, "")
+    let { email, cpf_cnpj, password, passwordRepeat } = req.body
 
-        const user = await User.findOne({ 
-            where: { email },
-            or: { cpf_cnpj }
+    cpf_cnpj = cpf_cnpj.replace(/\D/g, "")
+
+    const user = await User.findOne({ 
+        where: { email },
+        or: { cpf_cnpj }
+    })
+
+    if (user)
+        return res.render('user/register', {
+            user: req.body,
+            error: 'Usuário já cadastrado!'
         })
 
-        if (user)
-            return res.render('user/register', {
-                user: req.body,
-                error: 'Usuário já cadastrado!'
-            })
+    if (password != passwordRepeat)
+        return res.render('user/register', {
+            user: req.body,
+            error: 'As senhas devem ser iguais'
+        })
+    
+    next()
+}
+async function show(req, res, next) {
+    const { userId: id } = req.session
 
-        if (password != passwordRepeat)
-            return res.render('user/register', {
-                user: req.body,
-                error: 'As senhas devem ser iguais'
-            })
-        
-        next()
+    const user = await User.findOne({ where: {id} })
+
+    if (!user) 
+        return res.render('user/register', {
+            error: "Usuário não encontrado!"
+        })
+
+    req.user = user
+    next()
+}
+async function update(req, res, next) {
+    const fillAllFields = checkAllFields(req.body)
+
+    if(fillAllFields) {
+        return res.render('user/index', fillAllFields)
+    }
+
+    const { id, password } = req.body
+
+    if (!password) 
+        return res.render('user/index', {
+            user: req.body,
+            error: "Insira sua senha para atualizar o cadastro!"
+        }) 
+    
+    const user = await User.findOne({ where: {id} })
+
+    const passed = await compare(password, user.password)
+
+    if (!passed)
+        return res.render('user/index', {
+            user: req.body,
+            error: "Senha incorreta!"
+        })
+
+    req.user = user
+
+    next()
 }
 
 module.exports = {
-    post
+    post,
+    show,
+    update
 }
