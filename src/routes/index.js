@@ -17,7 +17,7 @@ routes.get('/ads/create', function(require, response) {
 });
 
 routes.get('/accounts', function(require, response) {
-    return response.redirect("/users/register");
+    return response.redirect("/users/login");
 });
 
 module.exports = routes;
