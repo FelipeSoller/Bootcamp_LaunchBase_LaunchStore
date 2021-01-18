@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add nodemailer
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add faker
 
 PATH: 
   C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\solle\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Windows\System32\OpenSSH;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files\Git\cmd;C:\ProgramData\chocolatey\bin;C:\Program Files\Microsoft VS Code\bin;C:\Program Files\nodejs;C:\Program Files (x86)\Yarn\bin;C:\Users\solle\AppData\Local\Microsoft\WindowsApps;C:\Users\solle\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\solle\AppData\Roaming\npm;C:\Users\solle\AppData\Local\Yarn\bin
@@ -14,7 +14,7 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: EPERM: operation not permitted, unlink 'C:\Users\solle\Documents\Projetos\Bootcamp_LaunchBase_LaunchStore\node_modules\cross-spawn\node_modules\.bin'
+  Error: EPERM: operation not permitted, unlink 'C:\Users\solle\Documents\Projetos\Bootcamp_LaunchBase_LaunchStore\node_modules\multer\node_modules\.bin'
 
 npm manifest: 
   {
@@ -36,6 +36,7 @@ npm manifest:
       "intl": "^1.2.5",
       "method-override": "^3.0.0",
       "multer": "^1.4.2",
+      "nodemailer": "^6.4.17",
       "nunjucks": "^3.2.2",
       "pg": "^8.5.1"
     },
@@ -1657,6 +1658,11 @@ Lockfile:
     version "1.0.5"
     resolved "https://registry.yarnpkg.com/nice-try/-/nice-try-1.0.5.tgz#a3378a7696ce7d223e88fc9b764bd7ef1089e366"
     integrity sha512-1nh45deeb5olNY7eX82BkPO7SSxR5SSYJiPTrTdFUVYwAl8CKMA5N9PjTYkHiRjisVcxcQ1HXdLhx2qxxJzLNQ==
+  
+  nodemailer@^6.4.17:
+    version "6.4.17"
+    resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-6.4.17.tgz#8de98618028953b80680775770f937243a7d7877"
+    integrity sha512-89ps+SBGpo0D4Bi5ZrxcrCiRFaMmkCt+gItMXQGzEtZVR3uAD3QAQIDoxTWnx3ky0Dwwy/dhFrQ+6NNGXpw/qQ==
   
   nodemon@^2.0.6:
     version "2.0.6"

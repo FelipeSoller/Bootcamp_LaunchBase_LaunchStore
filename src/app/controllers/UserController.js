@@ -89,8 +89,8 @@ module.exports = {
             await User.delete(req.body.id)
             req.session.destroy()
 
-            promiseResults.map(results => {
-                results.rows.map(file => {
+            promiseResults.map(files => {
+                files.map(file => {
                     try {
                         unlinkSync(file.path)
                     } catch (err) {
@@ -104,7 +104,7 @@ module.exports = {
             })
 
         } catch (error) {
-            console.error(err)
+            console.error(error)
                 return res.render('user/index', {
                     user: req.body,
                     error: "Erro ao tentar deletar sua conta!"
