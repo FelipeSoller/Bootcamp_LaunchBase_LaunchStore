@@ -36,12 +36,12 @@
                             </div>
                         </div>
                         <div class="quantity">
-                            {{order.quantity}}
+                            Qtd: {{order.quantity}}
                         </div>
                         <div class="total">
                             {{order.formattedTotal}}
                         </div>
-                        <div class="status">
+                        <div class="status {{order.status}}">
                             {{order.formattedStatus}}
                         </div>
                     </div>
