@@ -96,5 +96,11 @@ module.exports = {
             return res.render('orders/error')
         }        
     },
-    
+    async show(req, res) {
+        const order = await LoadOrderService.load('order', {
+            where: { id: req.params.id }
+        })
+
+        return res.render('orders/details', { order })
+    }
 }
